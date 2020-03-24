@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
+import ReCAPTCHA from 'react-google-recaptcha';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  state = {
+    valid: null,
+  }
+
+  validate = (value) => {
+    this.setState({valid:value});
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    if (this.state.valid === null) {
+      return( alert('preencha a captcha'));
+    }
+    alert('dados enviados');
+  }
+  render(){
+    return (
+      <div className="App">
+        <form  onSubmit={this.onSubmit}>
+          <label>
+            <input type="text"/>
+            <button type="submit">enviar</button>
+          </label>
+  
+          <ReCAPTCHA 
+            sitekey="6LcHw-MUAAAAAEEz3oWreP8jpU4p3AHWcQvG4Un2" 
+            onChange={this.validate} 
+          />
+  
+        </form>
+      </div>
+    );
+  }
+
+  
 }
 
 export default App;
